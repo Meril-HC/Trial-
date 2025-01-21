@@ -1205,13 +1205,32 @@ chart.seriesContainer.set("background", am5.Rectangle.new(root, {
     }
   });
 
-  // Add click event to navigate to country-specific page
-  polygonSeries.mapPolygons.template.events.on("click", function(ev) {
-    var id = ev.target.dataItem.get("id");
-    if (id) {
-      window.location.href = `${id.toLowerCase()}.html`; // Redirect to country-specific HTML file
+// Add click event to navigate to country-specific page
+polygonSeries.mapPolygons.template.events.on("click", function(ev) {
+  var id = ev.target.dataItem.get("id"); // Get the country ID
+  if (id) {
+    var countryName = getCountryFileName(id); // Map ID to file name
+    if (countryName) {
+      window.location.href = `${countryName}.html`; // Redirect to the HTML file
+    } else {
+      console.error(`No file mapping found for country ID: ${id}`);
     }
-  });
+  }
+});
+
+// Helper function to map country ID to file names
+function getCountryFileName(id) {
+  // Map of country IDs to file names
+  const countryFileMap = {
+    IN: "india", // India
+    US: "united-states", // United States
+    CN: "china", // China
+    FR: "france", // France
+    // Add other country mappings as needed
+  };
+
+  return countryFileMap[id] || null; // Return mapped file name or null
+}
 
   function selectCountry(id) {
     var dataItem = polygonSeries.getDataItemById(id);
