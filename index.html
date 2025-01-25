@@ -516,24 +516,58 @@
         });
     }
 
-    function generateData(products, selectedCountry, selectedProduct) {
-        const data = [];
-        products.forEach((product) => {
-            countries.forEach((country) => {
-                if (
-                    (!selectedCountry || selectedCountry === country) &&
-                    (!selectedProduct || selectedProduct === product)
-                ) {
-                    data.push({
-                        country,
-                        product,
-                        status: Math.random() > 0.5 ? "Reg." : "Not Reg.",
-                    });
-                }
-            });
-        });
-        return data;
-    }
+    const realData = [
+    // Meril Healthcare
+    { company: "Meril Healthcare", country: "USA", product: "Destiknee™ Total Knee System", status: "Registered" },
+    { company: "Meril Healthcare", country: "Germany", product: "Opulent™ Total Knee System", status: "Not Registered" },
+    { company: "Meril Healthcare", country: "India", product: "Freedom® Total Knee System", status: "Registered" },
+    { company: "Meril Healthcare", country: "Canada", product: "Latitud™ Hip Replacement System", status: "Under Registration" },
+    { company: "Meril Healthcare", country: "Japan", product: "Libertas™ Hip Replacement System", status: "Registered" },
+    { company: "Meril Healthcare", country: "USA", product: "ARTIS™/ARMAR™/DHUM™/KET™ - Non Sterile Bone Plates", status: "Registered" },
+    { company: "Meril Healthcare", country: "Germany", product: "MBOSS™/FIXION™/DHUM™/KET™ - Non Sterile Bone Screws", status: "Not Registered" },
+    { company: "Meril Healthcare", country: "India", product: "ACCURA™/CLAVO™/KET™ - Sterile & Non sterile IM Nails", status: "Registered" },
+    { company: "Meril Healthcare", country: "Canada", product: "Knee Instruments", status: "Under Registration" },
+    { company: "Meril Healthcare", country: "Japan", product: "Hip Instruments", status: "Registered" },
+    { company: "Meril Healthcare", country: "USA", product: "Trauma Instruments", status: "Registered" },
+    { company: "Meril Healthcare", country: "Germany", product: "MISSO Orthopedic Robotic System", status: "Under Registration" },
+    { company: "Meril Healthcare", country: "India", product: "Destiknee™ Uniknee Partial Knee System", status: "Registered" },
+    { company: "Meril Healthcare", country: "Canada", product: "Opulent™ Uniknee Partial Knee System", status: "Not Registered" },
+    { company: "Meril Healthcare", country: "Japan", product: "Destiknee Hinge Knee System", status: "Registered" },
+    { company: "Meril Healthcare", country: "USA", product: "Cementless Knee Replacement System (Using Additive techniques)", status: "Registered" },
+    { company: "Meril Healthcare", country: "Germany", product: "Latitud Monomod Revision Stem", status: "Registered" },
+    { company: "Meril Healthcare", country: "India", product: "Cementless Hip Replacement System (Using Additive techniques)", status: "Not Registered" },
+    { company: "Meril Healthcare", country: "Canada", product: "Arthroscopy Knee System", status: "Registered" },
+    { company: "Meril Healthcare", country: "Japan", product: "Arthroscopy Shoulder System", status: "Under Registration" },
+    { company: "Meril Healthcare", country: "USA", product: "Primis Shoulder System", status: "Registered" },
+    { company: "Meril Healthcare", country: "Germany", product: "Reusable Arthroscopy Knee Instruments Set", status: "Not Registered" },
+    { company: "Meril Healthcare", country: "India", product: "Reusable Arthroscopy Shoulder Instruments Set", status: "Registered" },
+
+    // Meril Endo-Surgery
+    { company: "Meril Endo-Surgery", country: "USA", product: "MERIZELLE Standard", status: "Registered" },
+    { company: "Meril Endo-Surgery", country: "Germany", product: "Profound A", status: "Under Registration" },
+    { company: "Meril Endo-Surgery", country: "India", product: "MERISTEEL", status: "Registered" },
+    { company: "Meril Endo-Surgery", country: "Canada", product: "MERICRON XL P", status: "Registered" },
+    { company: "Meril Endo-Surgery", country: "Japan", product: "FILAXYN", status: "Not Registered" },
+    { company: "Meril Endo-Surgery", country: "USA", product: "FILAPRON", status: "Registered" },
+    { company: "Meril Endo-Surgery", country: "Germany", product: "Aspiron Polyglactin 910 FST", status: "Registered" },
+    { company: "Meril Endo-Surgery", country: "India", product: "Aspiron Polyglactin 910", status: "Not Registered" },
+    { company: "Meril Endo-Surgery", country: "Canada", product: "Aspiron Polypropylene", status: "Under Registration" },
+    { company: "Meril Endo-Surgery", country: "Japan", product: "Aspiron Polyamide", status: "Registered" },
+    { company: "Meril Endo-Surgery", country: "USA", product: "FILAPROP", status: "Registered" },
+    { company: "Meril Endo-Surgery", country: "Germany", product: "FILASILK", status: "Not Registered" },
+    { company: "Meril Endo-Surgery", country: "India", product: "MITSU FST", status: "Registered" },
+    { company: "Meril Endo-Surgery", country: "Canada", product: "MITSU", status: "Registered" },
+    { company: "Meril Endo-Surgery", country: "Japan", product: "FILAMIDE", status: "Under Registration" },
+
+    // Meril Life-Sciences
+    { company: "Meril Life-Sciences", country: "USA", product: "Evermine50", status: "Registered" },
+    { company: "Meril Life-Sciences", country: "Germany", product: "BioMime Lineage", status: "Not Registered" },
+    { company: "Meril Life-Sciences", country: "India", product: "BioMime Morph", status: "Registered" },
+    { company: "Meril Life-Sciences", country: "Canada", product: "Proficient", status: "Registered" },
+    { company: "Meril Life-Sciences", country: "Japan", product: "BioMime", status: "Under Registration" },
+    { company: "Meril Life-Sciences", country: "USA", product: "BioMime Branch", status: "Registered" },
+    { company: "Meril Life-Sciences", country: "Germany", product: "Metafor", status: "Not Registered" },
+];
 
     function filterTable() {
         const selectedCompany = companySelect.value;
