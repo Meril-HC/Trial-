@@ -664,22 +664,33 @@ function updatePaginationControls(totalRows) {
 // Update Pagination Styling (Optional)
 const style = document.createElement("style");
 style.innerHTML = `
-  #pagination button {
-      margin: 0 5px;
-      padding: 5px 10px;
-      border: 1px solid #ccc;
-      background-color: #2db9c3;
-      cursor: pointer;
-  }
-  #pagination button.active {
-      background-color: #007bff;
-      color: #fff;
-      border-color: #2db9c3;
-  }
-  #pagination button:disabled {
-      background-color: #2db9c3;
-      color: #6c757d;
-      cursor: not-allowed;
+ #pagination button {
+    margin: 0 5px;
+    padding: 5px 15px;
+    border: 1px solid #00C1CF;
+    background-color: #00C1CF;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 12px; /* Slightly curved corners */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#pagination button.active {
+    background-color: #007BFF; /* Active button color */
+    color: #fff;
+    border-color: #007BFF;
+}
+
+#pagination button:disabled {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+    border-color: #e9ecef;
+}
+
+#pagination button:hover:not(:disabled) {
+    background-color: #008b98; /* Hover color */
+    color: #fff;
   }
 `;
 document.head.appendChild(style);
