@@ -582,7 +582,107 @@
             }
         })
     );
+// Pagination Variables
+let currentPage = 1;
+const rowsPerPage = 10;
 
+function updateTable(data) {
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+
+    // Slice the data for the current page
+    const paginatedData = data.slice(startIndex, endIndex);
+
+    // Update the table rows
+    tableBody.innerHTML = paginatedData
+        .map(
+            ({ country, product, status }, index) =>
+                `<tr>
+                    <td>${startIndex + index + 1}</td>
+                    <td>
+                        <div style="display: flex; align-items: center;">
+                            <div class="flag" style="background-image: url('https://flagcdn.com/w40/${getCountryCode(
+                                country
+                            )}.png'); background-size: cover;"></div>
+                            <span>${country}</span>
+                        </div>
+                    </td>
+                    <td>${product}</td>
+                    <td>${status}</td>
+                </tr>`
+        )
+        .join("");
+
+    // Update Pagination Controls
+    updatePaginationControls(data.length);
+}
+
+function updatePaginationControls(totalRows) {
+    const totalPages = Math.ceil(totalRows / rowsPerPage);
+    const paginationDiv = document.getElementById("pagination");
+
+    paginationDiv.innerHTML = "";
+
+    // Create "Previous" button
+    const prevButton = document.createElement("button");
+    prevButton.textContent = "Previous";
+    prevButton.disabled = currentPage === 1;
+    prevButton.addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            filterTable();
+        }
+    });
+    paginationDiv.appendChild(prevButton);
+
+    // Create page buttons
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement("button");
+        pageButton.textContent = i;
+        pageButton.className = i === currentPage ? "active" : "";
+        pageButton.addEventListener("click", () => {
+            currentPage = i;
+            filterTable();
+        });
+        paginationDiv.appendChild(pageButton);
+    }
+
+    // Create "Next" button
+    const nextButton = document.createElement("button");
+    nextButton.textContent = "Next";
+    nextButton.disabled = currentPage === totalPages;
+    nextButton.addEventListener("click", () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            filterTable();
+        }
+    });
+    paginationDiv.appendChild(nextButton);
+}
+
+// Update Pagination Styling (Optional)
+const style = document.createElement("style");
+style.innerHTML = `
+  #pagination button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      cursor: pointer;
+  }
+  #pagination button.active {
+      background-color: #007bff;
+      color: #fff;
+      border-color: #007bff;
+  }
+  #pagination button:disabled {
+      background-color: #e9ecef;
+      color: #6c757d;
+      cursor: not-allowed;
+  }
+`;
+document.head.appendChild(style);
+    
     // Initial Setup
     populateDropdown(productSelect, products.mixed);
     updateTable(generateData(products.mixed));
