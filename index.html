@@ -412,7 +412,7 @@
         </thead>
         <tbody id="table-body"></tbody>
     </table>
-    <table><div id="pagination" style="text-align: right; margin-top: 10px;"></div></table>
+    <div id="pagination" style="text-align: right; margin-top: 10px;"></div>
 </div>
 <div class="tab-content" id="graph">
     <h2>Graph Content</h2>
@@ -664,7 +664,15 @@ function updatePaginationControls(totalRows) {
 // Update Pagination Styling (Optional)
 const style = document.createElement("style");
 style.innerHTML = `
- #pagination button {
+ #pagination {
+    margin-top: 10px;
+    padding-top: 10px;
+    width: 100%; /* Ensure it aligns with the table */
+    display: flex;
+    justify-content: flex-end;
+}
+
+#pagination button {
     margin: 0 5px;
     padding: 5px 15px;
     border: 1px solid #00C1CF;
