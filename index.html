@@ -444,256 +444,154 @@
 </div>
 
 <script>
-    // ------------------------------------------
-    // Table Functionality
-    // ------------------------------------------
-    const products = {
-        mixed: [
-            "Destiknee™ Total Knee System",
-            "Opulent™ Total Knee System",
-            "Freedom® Total Knee System",
-            "Mitsu AB",
-            "Biomine",
-        ],
-        healthcare: [
-            "Destiknee™ Total Knee System",
-            "Opulent™ Total Knee System",
-            "Freedom® Total Knee System",
-        ],
-        endo: [
-            "Mitsu AB",
-            "Circular Stapler",
-        ],
-        "life-sciences": ["Biomine"],
-    };
-
-    const countries = ["USA", "Germany", "India", "Canada", "Japan"];
-    const companySelect = document.getElementById("company-select");
-    const productSelect = document.getElementById("product-select");
-    const countrySelect = document.getElementById("country-select");
-    const tableBody = document.getElementById("table-body");
-    const dropdownSection = document.getElementById("dropdown-section");
-
-    function updateTable(data) {
-        tableBody.innerHTML = data
-            .map(
-                ({ country, product, status }, index) =>
-                    `<tr>
-                        <td>${index + 1}</td>
-                        <td>
-                            <div style="display: flex; align-items: center;">
-                                <div class="flag" style="background-image: url('https://flagcdn.com/w40/${getCountryCode(
-                                    country
-                                )}.png'); background-size: cover;"></div>
-                                <span>${country}</span>
-                            </div>
-                        </td>
-                        <td>${product}</td>
-                        <td>${status}</td>
-                    </tr>`
-            )
-            .join("");
-    }
-
-    function getCountryCode(country) {
-        const countryCodes = {
-            USA: "us",
-            Germany: "de",
-            India: "in",
-            Canada: "ca",
-            Japan: "jp",
+        const products = {
+            mixed: [
+                "Destiknee™ Total Knee System",
+                "Opulent™ Total Knee System",
+                "Freedom® Total Knee System",
+                "Mitsu AB",
+                "Biomine",
+            ],
+            healthcare: [
+                "Destiknee™ Total Knee System",
+                "Opulent™ Total Knee System",
+                "Freedom® Total Knee System",
+            ],
+            endo: ["Mitsu AB", "Circular Stapler"],
+            "life-sciences": ["Biomine"],
         };
-        return countryCodes[country] || "xx";
-    }
 
-    function populateDropdown(select, items) {
-        select.innerHTML = `<option>Select Product</option>`;
-        items.forEach((item) => {
-            const option = document.createElement("option");
-            option.value = item;
-            option.textContent = item;
-            select.appendChild(option);
-        });
-    }
+        const realData = [
+            { company: "Meril Healthcare", country: "USA", product: "Destiknee™ Total Knee System", status: "Registered" },
+            { company: "Meril Healthcare", country: "Germany", product: "Opulent™ Total Knee System", status: "Not Registered" },
+            { company: "Meril Healthcare", country: "India", product: "Freedom® Total Knee System", status: "Registered" },
+            { company: "Meril Endo-Surgery", country: "USA", product: "MERIZELLE Standard", status: "Registered" },
+            { company: "Meril Life-Sciences", country: "USA", product: "Evermine50", status: "Registered" },
+            // Add additional realData entries here...
+        ];
 
-    const realData = [
-    // Meril Healthcare
-    { company: "Meril Healthcare", country: "USA", product: "Destiknee™ Total Knee System", status: "Registered" },
-    { company: "Meril Healthcare", country: "Germany", product: "Opulent™ Total Knee System", status: "Not Registered" },
-    { company: "Meril Healthcare", country: "India", product: "Freedom® Total Knee System", status: "Registered" },
-    { company: "Meril Healthcare", country: "Canada", product: "Latitud™ Hip Replacement System", status: "Under Registration" },
-    { company: "Meril Healthcare", country: "Japan", product: "Libertas™ Hip Replacement System", status: "Registered" },
-    { company: "Meril Healthcare", country: "USA", product: "ARTIS™/ARMAR™/DHUM™/KET™ - Non Sterile Bone Plates", status: "Registered" },
-    { company: "Meril Healthcare", country: "Germany", product: "MBOSS™/FIXION™/DHUM™/KET™ - Non Sterile Bone Screws", status: "Not Registered" },
-    { company: "Meril Healthcare", country: "India", product: "ACCURA™/CLAVO™/KET™ - Sterile & Non sterile IM Nails", status: "Registered" },
-    { company: "Meril Healthcare", country: "Canada", product: "Knee Instruments", status: "Under Registration" },
-    { company: "Meril Healthcare", country: "Japan", product: "Hip Instruments", status: "Registered" },
-    { company: "Meril Healthcare", country: "USA", product: "Trauma Instruments", status: "Registered" },
-    { company: "Meril Healthcare", country: "Germany", product: "MISSO Orthopedic Robotic System", status: "Under Registration" },
-    { company: "Meril Healthcare", country: "India", product: "Destiknee™ Uniknee Partial Knee System", status: "Registered" },
-    { company: "Meril Healthcare", country: "Canada", product: "Opulent™ Uniknee Partial Knee System", status: "Not Registered" },
-    { company: "Meril Healthcare", country: "Japan", product: "Destiknee Hinge Knee System", status: "Registered" },
-    { company: "Meril Healthcare", country: "USA", product: "Cementless Knee Replacement System (Using Additive techniques)", status: "Registered" },
-    { company: "Meril Healthcare", country: "Germany", product: "Latitud Monomod Revision Stem", status: "Registered" },
-    { company: "Meril Healthcare", country: "India", product: "Cementless Hip Replacement System (Using Additive techniques)", status: "Not Registered" },
-    { company: "Meril Healthcare", country: "Canada", product: "Arthroscopy Knee System", status: "Registered" },
-    { company: "Meril Healthcare", country: "Japan", product: "Arthroscopy Shoulder System", status: "Under Registration" },
-    { company: "Meril Healthcare", country: "USA", product: "Primis Shoulder System", status: "Registered" },
-    { company: "Meril Healthcare", country: "Germany", product: "Reusable Arthroscopy Knee Instruments Set", status: "Not Registered" },
-    { company: "Meril Healthcare", country: "India", product: "Reusable Arthroscopy Shoulder Instruments Set", status: "Registered" },
+        const companySelect = document.getElementById("company-select");
+        const productSelect = document.getElementById("product-select");
+        const countrySelect = document.getElementById("country-select");
+        const tableBody = document.getElementById("table-body");
+        const paginationDiv = document.getElementById("pagination");
 
-    // Meril Endo-Surgery
-    { company: "Meril Endo-Surgery", country: "USA", product: "MERIZELLE Standard", status: "Registered" },
-    { company: "Meril Endo-Surgery", country: "Germany", product: "Profound A", status: "Under Registration" },
-    { company: "Meril Endo-Surgery", country: "India", product: "MERISTEEL", status: "Registered" },
-    { company: "Meril Endo-Surgery", country: "Canada", product: "MERICRON XL P", status: "Registered" },
-    { company: "Meril Endo-Surgery", country: "Japan", product: "FILAXYN", status: "Not Registered" },
-    { company: "Meril Endo-Surgery", country: "USA", product: "FILAPRON", status: "Registered" },
-    { company: "Meril Endo-Surgery", country: "Germany", product: "Aspiron Polyglactin 910 FST", status: "Registered" },
-    { company: "Meril Endo-Surgery", country: "India", product: "Aspiron Polyglactin 910", status: "Not Registered" },
-    { company: "Meril Endo-Surgery", country: "Canada", product: "Aspiron Polypropylene", status: "Under Registration" },
-    { company: "Meril Endo-Surgery", country: "Japan", product: "Aspiron Polyamide", status: "Registered" },
-    { company: "Meril Endo-Surgery", country: "USA", product: "FILAPROP", status: "Registered" },
-    { company: "Meril Endo-Surgery", country: "Germany", product: "FILASILK", status: "Not Registered" },
-    { company: "Meril Endo-Surgery", country: "India", product: "MITSU FST", status: "Registered" },
-    { company: "Meril Endo-Surgery", country: "Canada", product: "MITSU", status: "Registered" },
-    { company: "Meril Endo-Surgery", country: "Japan", product: "FILAMIDE", status: "Under Registration" },
+        let currentPage = 1;
+        const rowsPerPage = 10;
 
-    // Meril Life-Sciences
-    { company: "Meril Life-Sciences", country: "USA", product: "Evermine50", status: "Registered" },
-    { company: "Meril Life-Sciences", country: "Germany", product: "BioMime Lineage", status: "Not Registered" },
-    { company: "Meril Life-Sciences", country: "India", product: "BioMime Morph", status: "Registered" },
-    { company: "Meril Life-Sciences", country: "Canada", product: "Proficient", status: "Registered" },
-    { company: "Meril Life-Sciences", country: "Japan", product: "BioMime", status: "Under Registration" },
-    { company: "Meril Life-Sciences", country: "USA", product: "BioMime Branch", status: "Registered" },
-    { company: "Meril Life-Sciences", country: "Germany", product: "Metafor", status: "Not Registered" },
-];
+        function updateTable(data) {
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
 
-    function filterTable() {
-        const selectedCompany = companySelect.value;
-        const selectedProduct =
-            productSelect.value === "Select Product" ? null : productSelect.value;
-        const selectedCountry =
-            countrySelect.value === "Select Country" ? null : countrySelect.value;
+            const paginatedData = data.slice(startIndex, endIndex);
 
-        const availableProducts = products[selectedCompany] || products.mixed;
-        const filteredData = generateData(
-            availableProducts,
-            selectedCountry,
-            selectedProduct
-        );
+            tableBody.innerHTML = paginatedData
+                .map(
+                    ({ company, country, product, status }, index) =>
+                        `<tr>
+                            <td>${startIndex + index + 1}</td>
+                            <td>${company}</td>
+                            <td>
+                                <div style="display: flex; align-items: center;">
+                                    <div class="flag" style="background-image: url('https://flagcdn.com/w40/${getCountryCode(
+                                        country
+                                    )}.png'); background-size: cover;"></div>
+                                    <span>${country}</span>
+                                </div>
+                            </td>
+                            <td>${product}</td>
+                            <td>${status}</td>
+                        </tr>`
+                )
+                .join("");
 
-        updateTable(filteredData);
-    }
+            updatePaginationControls(data.length);
+        }
 
-    companySelect.addEventListener("change", () => {
-        const selectedCompany = companySelect.value;
-        const availableProducts = products[selectedCompany] || products.mixed;
-        populateDropdown(productSelect, availableProducts);
-        filterTable();
-    });
+        function getCountryCode(country) {
+            const countryCodes = {
+                USA: "us",
+                Germany: "de",
+                India: "in",
+                Canada: "ca",
+                Japan: "jp",
+            };
+            return countryCodes[country] || "xx";
+        }
 
-    productSelect.addEventListener("change", filterTable);
-    countrySelect.addEventListener("change", filterTable);
+        function updatePaginationControls(totalRows) {
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+            paginationDiv.innerHTML = "";
 
-    document.querySelectorAll(".tab-button").forEach((button) =>
-        button.addEventListener("click", () => {
-            document
-                .querySelectorAll(".tab-button")
-                .forEach((btn) => btn.classList.remove("active"));
-            button.classList.add("active");
+            const prevButton = document.createElement("button");
+            prevButton.textContent = "Previous";
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener("click", () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    filterTable();
+                }
+            });
+            paginationDiv.appendChild(prevButton);
 
-            const tabId = button.dataset.tab;
-            document
-                .querySelectorAll(".tab-content")
-                .forEach((tab) => tab.classList.remove("active"));
-            document.getElementById(tabId).classList.add("active");
-
-            // Show dropdowns and export buttons only on Table tab
-            if (tabId === "table") {
-                dropdownSection.classList.remove("hidden");
-            } else {
-                dropdownSection.classList.add("hidden");
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement("button");
+                pageButton.textContent = i;
+                pageButton.className = i === currentPage ? "active" : "";
+                pageButton.addEventListener("click", () => {
+                    currentPage = i;
+                    filterTable();
+                });
+                paginationDiv.appendChild(pageButton);
             }
-        })
-    );
-// Pagination Variables
-let currentPage = 1;
-const rowsPerPage = 10;
 
-function updateTable(data) {
-    const startIndex = (currentPage - 1) * rowsPerPage;
-    const endIndex = startIndex + rowsPerPage;
-
-    // Slice the data for the current page
-    const paginatedData = data.slice(startIndex, endIndex);
-
-    // Update the table rows
-    tableBody.innerHTML = paginatedData
-        .map(
-            ({ country, product, status }, index) =>
-                `<tr>
-                    <td>${startIndex + index + 1}</td>
-                    <td>
-                        <div style="display: flex; align-items: center;">
-                            <div class="flag" style="background-image: url('https://flagcdn.com/w40/${getCountryCode(
-                                country
-                            )}.png'); background-size: cover;"></div>
-                            <span>${country}</span>
-                        </div>
-                    </td>
-                    <td>${product}</td>
-                    <td>${status}</td>
-                </tr>`
-        )
-        .join("");
-
-    // Update Pagination Controls
-    updatePaginationControls(data.length);
-}
-
-function updatePaginationControls(totalRows) {
-    const totalPages = Math.ceil(totalRows / rowsPerPage);
-    const paginationDiv = document.getElementById("pagination");
-
-    paginationDiv.innerHTML = "";
-
-    // Create "Previous" button
-    const prevButton = document.createElement("button");
-    prevButton.textContent = "Previous";
-    prevButton.disabled = currentPage === 1;
-    prevButton.addEventListener("click", () => {
-        if (currentPage > 1) {
-            currentPage--;
-            filterTable();
+            const nextButton = document.createElement("button");
+            nextButton.textContent = "Next";
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener("click", () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    filterTable();
+                }
+            });
+            paginationDiv.appendChild(nextButton);
         }
-    });
-    paginationDiv.appendChild(prevButton);
 
-    // Create page buttons
-    for (let i = 1; i <= totalPages; i++) {
-        const pageButton = document.createElement("button");
-        pageButton.textContent = i;
-        pageButton.className = i === currentPage ? "active" : "";
-        pageButton.addEventListener("click", () => {
-            currentPage = i;
+        function populateDropdown(select, items) {
+            select.innerHTML = `<option value="">Select Product</option>`;
+            items.forEach((item) => {
+                const option = document.createElement("option");
+                option.value = item;
+                option.textContent = item;
+                select.appendChild(option);
+            });
+        }
+
+        function filterTable() {
+            const selectedCompany = companySelect.value;
+            const selectedProduct = productSelect.value || null;
+            const selectedCountry = countrySelect.value || null;
+
+            const filteredData = realData.filter(
+                ({ company, country, product }) =>
+                    (!selectedCompany || company === selectedCompany) &&
+                    (!selectedCountry || country === selectedCountry) &&
+                    (!selectedProduct || product === selectedProduct)
+            );
+
+            currentPage = 1;
+            updateTable(filteredData);
+        }
+
+        companySelect.addEventListener("change", () => {
+            const selectedCompany = companySelect.value.toLowerCase();
+            const availableProducts = products[selectedCompany] || products.mixed;
+            populateDropdown(productSelect, availableProducts);
             filterTable();
         });
-        paginationDiv.appendChild(pageButton);
-    }
 
-    // Create "Next" button
-    const nextButton = document.createElement("button");
-    nextButton.textContent = "Next";
-    nextButton.disabled = currentPage === totalPages;
-    nextButton.addEventListener("click", () => {
-        if (currentPage < totalPages) {
-            currentPage++;
-            filterTable();
-        }
-    });
-    paginationDiv.appendChild(nextButton);
-}
+        productSelect.addEventListener("change", filterTable);
+        countrySelect.addEventListener("change", filterTable);
 
 // Update Pagination Styling (Optional)
 const style = document.createElement("style");
