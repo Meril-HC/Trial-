@@ -303,6 +303,37 @@
 
         option {
             padding: 10px;
+                    #pagination {
+            margin-top: 10px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        #pagination button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            border: 1px solid #00C1CF;
+            background-color: #00C1CF;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        #pagination button.active {
+            background-color: #007BFF;
+            border-color: #007BFF;
+        }
+
+        #pagination button:disabled {
+            background-color: #e9ecef;
+            color: #6c757d;
+            cursor: not-allowed;
+            border-color: #e9ecef;
+        }
+
+        #pagination button:hover:not(:disabled) {
+            background-color: #008b98;
         }
     </style>
 </head>
@@ -467,7 +498,7 @@
             { company: "Meril Healthcare", country: "India", product: "Freedom® Total Knee System", status: "Registered" },
             { company: "Meril Endo-Surgery", country: "USA", product: "MERIZELLE Standard", status: "Registered" },
             { company: "Meril Life-Sciences", country: "USA", product: "Evermine50", status: "Registered" },
-            // Add additional realData entries here...
+            // Add more data entries as required
         ];
 
         const companySelect = document.getElementById("company-select");
@@ -482,9 +513,6 @@
         function updateTable(data) {
             const startIndex = (currentPage - 1) * rowsPerPage;
             const endIndex = startIndex + rowsPerPage;
-
-            const paginatedData = data.slice(startIndex, endIndex);
-
             const paginatedData = data.slice(startIndex, endIndex);
 
             tableBody.innerHTML = paginatedData
@@ -560,7 +588,7 @@
         }
 
         function populateDropdown(select, items) {
-            select.innerHTML = `<option value="">Select Product</option>`;
+            select.innerHTML = `<option value="">All Products</option>`;
             items.forEach((item) => {
                 const option = document.createElement("option");
                 option.value = item;
@@ -595,52 +623,10 @@
         productSelect.addEventListener("change", filterTable);
         countrySelect.addEventListener("change", filterTable);
 
-// Update Pagination Styling (Optional)
-const style = document.createElement("style");
-style.innerHTML = `
- #pagination {
-    margin-top: 10px;
-    padding-top: 10px;
-    width: 100%; /* Ensure it aligns with the table */
-    display: flex;
-    justify-content: flex-end;
-}
-
-#pagination button {
-    margin: 0 5px;
-    padding: 5px 15px;
-    border: 1px solid #00C1CF;
-    background-color: #00C1CF;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 12px; /* Slightly curved corners */
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-#pagination button.active {
-    background-color: #007BFF; /* Active button color */
-    color: #fff;
-    border-color: #007BFF;
-}
-
-#pagination button:disabled {
-    background-color: #e9ecef;
-    color: #6c757d;
-    cursor: not-allowed;
-    border-color: #e9ecef;
-}
-
-#pagination button:hover:not(:disabled) {
-    background-color: #008b98; /* Hover color */
-    color: #fff;
-  }
-`;
-document.head.appendChild(style);
-    
-    // Initial Setup
-    populateDropdown(productSelect, products.mixed);
-    updateTable(generateData(products.mixed));
-</script>
+        // Initial setup
+        populateDropdown(productSelect, products.mixed);
+        updateTable(realData);
+    </script>
 
 <script>
         am5.ready(function () {
