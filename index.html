@@ -404,47 +404,51 @@
     <button class="tab-button" data-tab="map">Map</button>
 </div>
 
-<!-- Dropdown and Export Section -->
-<div id="dropdown-section" class="dropdown-section">
-    <select id="company-select">
-        <option value="mixed">Select Company</option>
-        <option value="healthcare">Meril Healthcare</option>
-        <option value="endo">Meril Endo-surgery</option>
-        <option value="life-sciences">Meril Life Sciences</option>
-    </select>
-    <select id="product-select">
-        <option>Select Product</option>
-    </select>
-    <select id="country-select">
-        <option>Select Country</option>
-        <option value="USA">USA</option>
-        <option value="Germany">Germany</option>
-        <option value="India">India</option>
-        <option value="Canada">Canada</option>
-        <option value="Japan">Japan</option>
-    </select>
-    <div class="export-buttons">
-        <button onclick="alert('Export to Excel coming soon!')">Export to Excel</button>
-        <button onclick="alert('Export to Word coming soon!')">Export to Word</button>
-    </div>
-</div>
+<!-- Filters -->
+    <div>
+        <label for="company-select">Select Company:</label>
+        <select id="company-select">
+            <option value="">All Companies</option>
+            <option value="Meril Healthcare">Meril Healthcare</option>
+            <option value="Meril Endo-Surgery">Meril Endo-Surgery</option>
+            <option value="Meril Life-Sciences">Meril Life-Sciences</option>
+        </select>
 
-<!-- Tab Contents -->
-<div class="tab-content active" id="table">
-    <h2>Product Registration Status</h2>
+        <label for="product-select">Select Product:</label>
+        <select id="product-select">
+            <option value="">All Products</option>
+        </select>
+
+        <label for="country-select">Select Country:</label>
+        <select id="country-select">
+            <option value="">All Countries</option>
+            <option value="USA">USA</option>
+            <option value="Germany">Germany</option>
+            <option value="India">India</option>
+            <option value="Canada">Canada</option>
+            <option value="Japan">Japan</option>
+        </select>
+    </div>
+
+    <!-- Table -->
     <table>
         <thead>
             <tr>
-                <th>Sr.No.</th>
+                <th>#</th>
+                <th>Company</th>
                 <th>Country</th>
                 <th>Product</th>
-                <th>Registration Status</th>
+                <th>Status</th>
             </tr>
         </thead>
-        <tbody id="table-body"></tbody>
+        <tbody id="table-body">
+            <!-- Dynamic content will appear here -->
+        </tbody>
     </table>
-    <div id="pagination" style="text-align: right; margin-top: 10px;"></div>
-</div>
+
+    <!-- Pagination -->
+    <div id="pagination"></div>
+    
 <div class="tab-content" id="graph">
     <h2>Graph Content</h2>
     <!-- Dropdowns for Continent and Company -->
